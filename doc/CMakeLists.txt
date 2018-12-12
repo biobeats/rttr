@@ -30,14 +30,14 @@ find_package(Doxygen)
 # an will be substituted by the following values
 set(DOXYGEN_PROJECT_NUMBER    "${RTTR_VERSION_STR}")
 set(DOXYGEN_PROJECT_NAME      "${PROJECT_NAME}")
-set(DOXYGEN_INPUT_DIRECTORY   "${CMAKE_SOURCE_DIR}/src/rttr \\
+set(DOXYGEN_INPUT_DIRECTORY   "${PROJECT_SOURCE_DIR}/src/rttr \\
                                ${CMAKE_CURRENT_SOURCE_DIR}" )
-set(DOXYGEN_OUTPUT_DIRECTORY  "${CMAKE_BINARY_DIR}/doc")
+set(DOXYGEN_OUTPUT_DIRECTORY  "${PROJECT_BINARY_DIR}/doc")
 set(DOXYGEN_DOC_INSTALL_DIR   "doc")
 set(DOXYGEN_CONFIG_FILE_IN    "DoxyFile.cfg.in")
 set(DOXYGEN_LAYOUT_FILE_IN    "doxygen-customization/layout/DoxygenLayout.xml.in")
 set(DOXYGEN_EXCLUDE           "")
-set(DOXYGEN_STRIP_FROM_PATH   "${CMAKE_SOURCE_DIR}/src/rttr")
+set(DOXYGEN_STRIP_FROM_PATH   "${PROJECT_SOURCE_DIR}/src/rttr")
 set(DOXYGEN_CUSTOM_HTML_DIR   "rttr-${RTTR_VERSION_MAJOR}-${RTTR_VERSION_MINOR}-${RTTR_VERSION_PATCH}")
 set(DOXYGEN_PREDEFINED        "DOXYGEN \\
                                RTTR_INLINE= \\
@@ -142,7 +142,7 @@ install(FILES "${DOXYGEN_OUTPUT_DIRECTORY}/${DOXYGEN_INDEX_FILE}"
 #########################################################################################
 
 if (BUILD_WEBSITE_DOCU)
-    set(DOXYGEN_OUTPUT_DIRECTORY        "${CMAKE_BINARY_DIR}/doc_website")
+    set(DOXYGEN_OUTPUT_DIRECTORY        "${PROJECT_BINARY_DIR}/doc_website")
     set(DOXYGEN_CUSTOM_HTML_FOOTER      "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_website_customization/html/footer.html")
     set(DOXYGEN_CUSTOM_HTML_HEADER      "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_website_customization/html/header.html")
     set(DOXYGEN_CUSTOM_HTML_STYLESHEET  "${CMAKE_CURRENT_SOURCE_DIR}/doxygen_website_customization/css/custom-doxygen.css")
@@ -158,7 +158,7 @@ if (BUILD_WEBSITE_DOCU)
                       COMMAND "${DOXYGEN_EXECUTABLE}" "${DOXYGEN_OUTPUT_DIRECTORY}/${DOXYGEN_CONFIG_FILE}"
                       WORKING_DIRECTORY "${DOXYGEN_OUTPUT_DIRECTORY}"
                       COMMENT "Building documentation...")
-    
+
     set_target_properties(doc_website PROPERTIES FOLDER "Documentation")
 endif()
 

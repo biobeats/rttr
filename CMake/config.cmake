@@ -36,8 +36,8 @@ set(RTTR_PRODUCT_NAME "RTTR")
 message("Project version: ${RTTR_VERSION_STR}")
 
 # files
-set(README_FILE "${CMAKE_SOURCE_DIR}/README.md")
-set(LICENSE_FILE "${CMAKE_SOURCE_DIR}/LICENSE.txt")
+set(README_FILE "${PROJECT_SOURCE_DIR}/README.md")
+set(LICENSE_FILE "${PROJECT_SOURCE_DIR}/LICENSE.txt")
 
 # dirs where the binaries should be placed, installed
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
@@ -54,7 +54,7 @@ endif()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 #3rd part dependencies dirs
-set(RTTR_3RD_PARTY_DIR "${CMAKE_SOURCE_DIR}/3rd_party")
+set(RTTR_3RD_PARTY_DIR "${PROJECT_SOURCE_DIR}/3rd_party")
 
 getNameOfDir(CMAKE_LIBRARY_OUTPUT_DIRECTORY RTTR_TARGET_BIN_DIR)
 is_vs_based_build(VS_BUILD)
@@ -62,7 +62,7 @@ is_vs_based_build(VS_BUILD)
 # set all install directories for the targets
 if(UNIX)
   include(GNUInstallDirs)
-  set(RTTR_RUNTIME_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}") 
+  set(RTTR_RUNTIME_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
   set(RTTR_LIBRARY_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}")
   set(RTTR_ARCHIVE_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}")
   set(RTTR_FRAMEWORK_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}")
@@ -73,7 +73,7 @@ if(UNIX)
   set(RTTR_ADDITIONAL_FILES_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/rttr")
 
 elseif(WIN32)
-  set(RTTR_RUNTIME_INSTALL_DIR   "bin") 
+  set(RTTR_RUNTIME_INSTALL_DIR   "bin")
   set(RTTR_LIBRARY_INSTALL_DIR   "bin")
   set(RTTR_ARCHIVE_INSTALL_DIR   "lib")
   set(RTTR_FRAMEWORK_INSTALL_DIR "bin")
@@ -86,7 +86,7 @@ endif()
 
 # to avoid a setting a global debug flag automatically for all targets
 # we use an own variable
-set(RTTR_DEBUG_POSTFIX "_d") 
+set(RTTR_DEBUG_POSTFIX "_d")
 
 # set the rpath for executables
 set(CMAKE_SKIP_BUILD_RPATH OFF)            # use, i.e. don't skip the full RPATH for the build tree
@@ -96,7 +96,7 @@ if(APPLE)
   set(MACOSX_RPATH ON CACHE STRING "Set this to off if you dont want @rpath in install names") # uses a install name @rpath/... for libraries
   set(RTTR_EXECUTABLE_INSTALL_RPATH "${RTTR_INSTALL_FULL_LIBDIR};@executable_path")
   # the executable is relocatable, since the library builds with and install name "@rpath/librttr_core.0.9.6.dylib"
-  # the executable links 
+  # the executable links
 elseif(UNIX)
   set(RTTR_EXECUTABLE_INSTALL_RPATH "${RTTR_INSTALL_FULL_LIBDIR};$ORIGIN")
 elseif(WIN32)
@@ -140,14 +140,14 @@ endif()
 
 if(MSVC)
     # we have to remove the default warning level,
-    # otherwise we get ugly compiler warnings, because of later replacing 
+    # otherwise we get ugly compiler warnings, because of later replacing
     # option /W3 with /W4 (which will be later added)
-    replace_compiler_option("/W3" " ") 
+    replace_compiler_option("/W3" " ")
     if (BUILD_WITH_STATIC_RUNTIME_LIBS)
         replace_compiler_option("/MD" " ")
         replace_compiler_option("/MDd" " ")
     endif()
-   
+
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     if(MINGW)
         set(GNU_STATIC_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
